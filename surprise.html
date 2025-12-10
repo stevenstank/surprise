@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Surprise 🎁</title>
+  <link rel="stylesheet" href="surprise.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>✨ Happy Birthday Tanmay ✨</h1>
+      <p>Here's something special just for you...</p>
+    </div>
+
+    <div class="slideshow-container">
+      <div class="slide active">
+        <img src="surprise-images/photo1.jpeg" alt="Memory 1">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo2.jpeg" alt="Memory 2">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo3.jpeg" alt="Memory 3">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo4.jpeg" alt="Memory 4">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo5.jpeg" alt="Memory 5">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo6.jpeg" alt="Memory 6">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo7.jpeg" alt="Memory 7">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo8.jpeg" alt="Memory 8">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo9.jpeg" alt="Memory 9">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo10.jpeg" alt="Memory 10">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo11.jpeg" alt="Memory 11">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo12.jpeg" alt="Memory 12">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo13.jpeg" alt="Memory 13">
+      </div>
+      <div class="slide">
+        <img src="surprise-images/photo14.jpeg" alt="Memory 14">
+      </div>
+      <div class="slide-counter">
+        <span id="currentSlide">1</span> / 14
+      </div>
+    </div>
+
+    <div class="surprises-grid">
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">💛</span>
+        <div class="title">Click Me!</div>
+        <div class="message">
+          Every moment with you has been a blessing. You make ordinary days extraordinary just by being yourself
+        </div>
+      </div>
+
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">🌟</span>
+        <div class="title">Open This!</div>
+        <div class="message">
+          Your kindness and warmth light up every room you walk into. The world is better because you're in it.
+        </div>
+      </div>
+
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">✨</span>
+        <div class="title">Tap Here!</div>
+        <div class="message">
+          Thank you for being someone I can always count on. Your friendship is one of the greatest gifts in my life.
+        </div>
+      </div>
+
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">🎈</span>
+        <div class="title">Click Me!</div>
+        <div class="message">
+          You have this incredible ability to make everyone around you feel valued and loved. That's something truly special.
+        </div>
+      </div>
+
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">💫</span>
+        <div class="title">Surprise!</div>
+        <div class="message">
+          Watching you grow and chase your dreams has been inspiring. I'm so proud of everything you've achieved.
+        </div>
+      </div>
+
+      <div class="surprise-box" onclick="revealSurprise(this)">
+        <span class="icon">🌙</span>
+        <div class="title">Open Me!</div>
+        <div class="message">
+          Here's to many more years of beautiful memories, endless adventures, and a friendship that keeps getting stronger.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-finale-btn" onclick="showFinale()">
+      💝 One More Surprise... 💝
+    </button>
+  </div>
+
+  <div class="finale" id="finale">
+    <div class="finale-content">
+      <h2>💛 For Tanmay 💛</h2>
+      <p>As you turn 19, I want you to know how much you mean to me.</p>
+      <p>You've been there through everything - celebrating my wins, supporting me through tough times, and making even the simplest moments unforgettable.</p>
+      <p>Your presence in my life has made me a better person. You've taught me what true friendship looks like loyal, genuine, and unconditional.</p>
+      <p>I'm grateful for every laugh we've shared, every conversation we've had, and every memory we've created together.</p>
+      <p>As you step into this new year, I hope it brings you everything your heart desires. You deserve all the happiness in the world.</p>
+      <p>Thank you for being you. Thank you for being my friend. Thank you for being family.</p>
+      <p style="margin-top: 20px; font-style: italic;">Happy Birthday, meri jaan. Here's to forever. ❤️<br>- Saksham</p>
+      <button class="finale-close" onclick="closeFinale()">Thank You 🥺</button>
+    </div>
+  </div>
+
+  <div class="music-control" onclick="toggleMusic()">
+    <span id="musicIcon">🎵 Music Playing</span>
+  </div>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="dekha-hi-nhi.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="surprise.js"></script>
+</body>
+</html>
