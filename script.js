@@ -29,35 +29,51 @@ function closeFinale() {
 
 const music = document.getElementById('bgMusic');
 const musicIcon = document.getElementById('musicIcon');
+const musicPrompt = document.getElementById('musicPrompt');
 let isPlaying = false;
+let hasInteracted = false;
 
 function toggleMusic() {
     if (isPlaying) {
         music.pause();
         musicIcon.textContent = '🔇 Music Paused';
     } else {
-        music.play();
-        musicIcon.textContent = '🎵 Music Playing';
+        if (music.paused) {
+            music.play();
+            musicIcon.textContent = '🎵 Music Playing';
+        }
     }
     isPlaying = !isPlaying;
 }
 
 music.volume = 0.5;
 
-function startMusicOnInteraction() {
-    if (music.paused) {
+function handleInteraction() {
+    if (!hasInteracted) {
         music.play().then(() => {
             isPlaying = true;
+            hasInteracted = true;
             musicIcon.textContent = '🎵 Music Playing';
+            if (musicPrompt) musicPrompt.style.display = 'none';
         }).catch(error => {
-            console.error('Audio playback failed:', error);
-            musicIcon.textContent = '⚠️ Failed to Play';
+            console.error('Playback failed even after interaction:', error);
         });
     }
-
-    document.removeEventListener('click', startMusicOnInteraction);
-    document.removeEventListener('touchstart', startMusicOnInteraction);
 }
 
-document.addEventListener('click', startMusicOnInteraction);
-document.addEventListener('touchstart', startMusicOnInteraction);
+document.addEventListener('click', handleInteraction, { once: true });
+document.addEventListener('touchstart', handleInteraction, { once: true });
+if (musicPrompt) {
+    musicPrompt.addEventListener('click', handleInteraction, { once: true });
+}
+
+if (window.location.hash === '#autostart') {
+    music.play().then(() => {
+        isPlaying = true;
+        hasInteracted = true;
+        musicIcon.textContent = '🎵 Music Playing';
+        if (musicPrompt) musicPrompt.style.display = 'none';
+    }).catch(error => {
+        if (musicPrompt) musicPrompt.style.display = 'block';
+    });
+}
