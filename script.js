@@ -1,6 +1,7 @@
 let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll('.polaroid');
 const totalSlides = slides.length;
+let autoSlideInterval;
 
 function showSlide(n) {
     slides.forEach(slide => slide.classList.remove('active'));
@@ -9,9 +10,49 @@ function showSlide(n) {
     document.getElementById('currentSlide').textContent = currentSlide + 1;
 }
 
-setInterval(() => {
-    showSlide(currentSlide + 1);
-}, 3000);
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+    resetAutoSlide();
+}
+
+function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+        showSlide(currentSlide + 1);
+    }, 3000);
+}
+
+function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
+}
+
+startAutoSlide();
+
+const slideshowContainer = document.getElementById('slideshowContainer');
+let touchStartX = 0;
+let touchEndX = 0;
+
+slideshowContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+slideshowContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            changeSlide(1);
+        } else {
+            changeSlide(-1);
+        }
+    }
+}
 
 function revealSurprise(element) {
     element.classList.toggle('revealed');
@@ -77,3 +118,31 @@ if (window.location.hash === '#autostart') {
         if (musicPrompt) musicPrompt.style.display = 'block';
     });
 }
+
+function createShootingStar() {
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+
+    const startX = Math.random() * (window.innerWidth + 200);
+    const startY = Math.random() * (window.innerHeight / 3);
+
+    star.style.left = startX + 'px';
+    star.style.top = startY + 'px';
+    star.style.animation = 'shoot 2s ease-in forwards';
+
+    document.body.appendChild(star);
+
+    setTimeout(() => {
+        star.remove();
+    }, 2000);
+}
+
+setInterval(createShootingStar, 2000);
+
+setTimeout(() => {
+    createShootingStar();
+}, 1000);
+
+setTimeout(() => {
+    createShootingStar();
+}, 500);
