@@ -54,22 +54,42 @@ function handleSwipe() {
     }
 }
 
-function revealSurprise(element) {
-    element.classList.toggle('revealed');
-}
+// Event delegation for surprise boxes and slide buttons
+document.addEventListener('click', (e) => {
+    // Handle surprise boxes
+    if (e.target.closest('.surprise-box')) {
+        e.target.closest('.surprise-box').classList.toggle('revealed');
+    }
+    // Handle slide direction buttons
+    if (e.target.closest('[data-slide-direction]')) {
+        const direction = parseInt(e.target.closest('[data-slide-direction]').dataset.slideDirection);
+        changeSlide(direction);
+    }
+    // Handle finale button
+    if (e.target.id === 'finaleBtn') {
+        document.getElementById('finale').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    // Handle finale close button
+    if (e.target.id === 'finaleCloseBtn') {
+        document.getElementById('finale').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
 
-function showFinale() {
-    document.getElementById('finale').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+// Keyboard support for slide buttons
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeSlide(1);
+    }
+});
 
-function closeFinale() {
-    document.getElementById('finale').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
+// Music control
 const music = document.getElementById('bgMusic');
 const musicIcon = document.getElementById('musicIcon');
+const musicControl = document.getElementById('musicControl');
 const musicPrompt = document.getElementById('musicPrompt');
 let isPlaying = false;
 let hasInteracted = false;
@@ -79,12 +99,21 @@ function toggleMusic() {
         music.pause();
         musicIcon.textContent = '🔇 Music Paused';
     } else {
-        if (music.paused) {
-            music.play();
-            musicIcon.textContent = '🎵 Music Playing';
-        }
+        music.play();
+        musicIcon.textContent = '🎵 Music Playing';
     }
     isPlaying = !isPlaying;
+}
+
+// Add music control click handler
+if (musicControl) {
+    musicControl.addEventListener('click', toggleMusic);
+    musicControl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleMusic();
+        }
+    });
 }
 
 music.volume = 0.5;
@@ -102,11 +131,9 @@ function handleInteraction() {
     }
 }
 
+// Add interaction listeners with { once: true } to automatically remove after first trigger
 document.addEventListener('click', handleInteraction, { once: true });
 document.addEventListener('touchstart', handleInteraction, { once: true });
-if (musicPrompt) {
-    musicPrompt.addEventListener('click', handleInteraction, { once: true });
-}
 
 if (window.location.hash === '#autostart') {
     music.play().then(() => {
@@ -119,7 +146,18 @@ if (window.location.hash === '#autostart') {
     });
 }
 
+// Shooting star animation - optimized to prevent memory leaks
+let shootingStarTimeout;
+let shootingStarInterval;
+const maxShootingStars = 50; // Prevent DOM bloat
+
 function createShootingStar() {
+    // Remove old stars to prevent memory leaks
+    const existingStars = document.querySelectorAll('.shooting-star');
+    if (existingStars.length > maxShootingStars) {
+        existingStars[0].remove();
+    }
+
     const star = document.createElement('div');
     star.className = 'shooting-star';
 
@@ -132,17 +170,25 @@ function createShootingStar() {
 
     document.body.appendChild(star);
 
+    // Clean up the star after animation completes
     setTimeout(() => {
         star.remove();
     }, 2000);
 }
 
-setInterval(createShootingStar, 2000);
+// Start shooting stars with proper cleanup
+shootingStarTimeout = setTimeout(() => {
+    createShootingStar();
+}, 500);
 
-setTimeout(() => {
+shootingStarTimeout = setTimeout(() => {
     createShootingStar();
 }, 1000);
 
-setTimeout(() => {
-    createShootingStar();
-}, 500);
+shootingStarInterval = setInterval(createShootingStar, 2000);
+
+// Cleanup function (useful if needed)
+function stopShootingStars() {
+    clearTimeout(shootingStarTimeout);
+    clearInterval(shootingStarInterval);
+}

@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Surprise 🎁</title>
+    <title>Special Surprise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -20,7 +23,7 @@
         </div>
 
         <div class="slideshow-container" id="slideshowContainer">
-            <button class="nav-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="nav-btn prev" data-slide-direction="-1">&#10094;</button>
 
             <div class="polaroid active">
                 <div class="polaroid-image">
@@ -93,7 +96,7 @@
                 </div>
             </div>
 
-            <button class="nav-btn next" onclick="changeSlide(1)">&#10095;</button>
+            <button class="nav-btn next" data-slide-direction="1">&#10095;</button>
 
             <div class="slide-counter">
                 <span id="currentSlide">1</span> / 14
@@ -101,7 +104,7 @@
         </div>
 
         <div class="surprises-grid">
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">💛</span>
                 <div class="title">Click Me!</div>
                 <div class="message">
@@ -110,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">🌟</span>
                 <div class="title">Open This!</div>
                 <div class="message">
@@ -119,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">✨</span>
                 <div class="title">Tap Here!</div>
                 <div class="message">
@@ -128,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">😊</span>
                 <div class="title">Click Me!</div>
                 <div class="message">
@@ -137,7 +140,7 @@
                 </div>
             </div>
 
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">💫</span>
                 <div class="title">Surprise!</div>
                 <div class="message">
@@ -146,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="surprise-box" onclick="revealSurprise(this)">
+            <div class="surprise-box">
                 <span class="icon">🫂</span>
                 <div class="title">Open Me!</div>
                 <div class="message">
@@ -156,7 +159,7 @@
             </div>
         </div>
 
-        <button class="reveal-finale-btn" onclick="showFinale()">
+        <button class="reveal-finale-btn" id="finaleBtn">
             💝 One More Surprise... 💝
         </button>
     </div>
@@ -176,11 +179,11 @@
             <p>Thank you for being you. Thank you for being my friend. Thank you for being family.</p>
             <p style="margin-top: 20px; font-style: italic;">Happy Birthday, meri jaan. Here's to forever. ❤️<br>-
                 Saksham</p>
-            <button class="finale-close" onclick="closeFinale()">Thank You 🥺</button>
+            <button class="finale-close" id="finaleCloseBtn">Thank You 🥺</button>
         </div>
     </div>
 
-    <div class="music-control" onclick="toggleMusic()">
+    <div class="music-control" id="musicControl" role="button" tabindex="0" aria-label="Toggle music">
         <span id="musicIcon">🎵 Music Playing</span>
     </div>
 
